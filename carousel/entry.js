@@ -1,3 +1,6 @@
+require("./style.sass");
 require("./style.css");
-document.write(require("./content.js"));
-
+const Content = require("./content.js");
+document.write(Content);
+const Carousel = require("./carousel.js");
+Carousel.init();

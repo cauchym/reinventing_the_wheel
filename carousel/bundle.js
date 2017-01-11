@@ -44,10 +44,14 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
 	__webpack_require__(1);
-	document.write(__webpack_require__(5));
-
-
+	__webpack_require__(5);
+	var Content = __webpack_require__(7);
+	document.write(Content);
+	var Carousel = __webpack_require__(8);
+	Carousel.init();
 
 /***/ },
 /* 1 */
@@ -65,8 +69,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./node_modules/css-loader/index.js!./style.css", function() {
-				var newContent = require("!!./node_modules/css-loader/index.js!./style.css");
+			module.hot.accept("!!./node_modules/css-loader/index.js!./node_modules/sass-loader/index.js!./style.sass", function() {
+				var newContent = require("!!./node_modules/css-loader/index.js!./node_modules/sass-loader/index.js!./style.sass");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -84,7 +88,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  background: yellow;\n}\n\n", ""]);
+	exports.push([module.id, "body {\n  color: red; }\n  body .l-carousel {\n    margin-left: auto;\n    margin-right: auto; }\n  body .p-carousel {\n    position: relative;\n    width: 640px;\n    height: 360px; }\n  body ._p-Btn, body .p-leftBtn, body .p-rightBtn {\n    width: 24px;\n    height: 24px;\n    color: white;\n    position: absolute;\n    top: 50%;\n    text-align: center;\n    margin-top: auto;\n    margin-bottom: auto;\n    cursor: pointer; }\n  body .p-leftBtn {\n    left: 10px; }\n  body .p-rightBtn {\n    right: 10px; }\n  body .p-image {\n    display: none;\n    height: 100%; }\n    body .p-image.is-active {\n      display: block; }\n    body .p-image img {\n      height: 100%;\n      width: 100%; }\n", ""]);
 
 	// exports
 
@@ -399,11 +403,142 @@
 
 /***/ },
 /* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(6);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(4)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./node_modules/css-loader/index.js!./node_modules/sass-loader/index.js!./style.css", function() {
+				var newContent = require("!!./node_modules/css-loader/index.js!./node_modules/sass-loader/index.js!./style.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "body {\n  background: yellow; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 7 */
 /***/ function(module, exports) {
 
-	module.exports = "It works from content.js.";
+	'use strict';
 
+	module.exports = '<h2>image files...</h2>';
+	// module.exports = `<img src="./1.jpg"></img>
+	//         <img src="./2.jpg"></img>
+	//         <img src="./3.jpg"></img>
+	//         <img src="./4.jpg"></img>
+	//         <img src="./5.jpg"></img>`;
 
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var Carousel = {
+	  init: function init() {
+	    "use strict";
+
+	    Carousel.config = {
+	      indexIds: Carousel._getIndexIds()
+	    };
+	    window.onload = this.setEventListener();
+	  },
+	  setEventListener: function setEventListener() {
+	    "use strict";
+
+	    var leftArrow = document.getElementById('p-leftBtn');
+	    leftArrow.addEventListener('click', this.clickLeftArrow, false);
+	    var rightArrow = document.getElementById('p-rightBtn');
+	    rightArrow.addEventListener('click', this.clickRightArrow, false);
+	  },
+	  clickLeftArrow: function clickLeftArrow() {
+	    "use strict";
+
+	    Carousel._rollCarousel(Carousel._getShownId(), 'former');
+	  },
+	  clickRightArrow: function clickRightArrow() {
+	    "use strict";
+
+	    Carousel._rollCarousel(Carousel._getShownId(), 'latter');
+	  },
+	  _getShownId: function _getShownId() {
+	    "use strict";
+
+	    var activeImage = document.getElementsByClassName('is-active');
+	    return activeImage[0].id;
+	  },
+	  _rollCarousel: function _rollCarousel(shownId, towardOpt) {
+	    "use strict";
+
+	    var _shownId = shownId;
+	    var towardId = Carousel.getTowardId(_shownId, towardOpt);
+	    Carousel.changeShownImage(_shownId, towardId);
+	  },
+	  _getIndexIds: function _getIndexIds() {
+	    "use strict";
+
+	    var ImagesArray = document.getElementsByClassName('p-image');
+	    var indexIds = [];
+	    Array.prototype.forEach.call(ImagesArray, function (el) {
+	      indexIds.push(el.id);
+	    });
+	    return indexIds;
+	  },
+	  getTowardId: function getTowardId(shownId, towardOpt) {
+	    "use strict";
+
+	    var _shownId = shownId;
+	    var _indexIds = Carousel.config.indexIds;
+	    var shownIndex = _indexIds.indexOf(_shownId);
+	    var towardIndex = -1;
+	    if (towardOpt === 'former' && shownIndex === 0) {
+	      towardIndex = shownIndex;
+	    } else if (towardOpt === 'latter' && shownIndex === _indexIds.length - 1) {
+	      towardIndex = shownIndex;
+	    } else {
+	      towardIndex = towardOpt === 'former' ? shownIndex - 1 : shownIndex + 1;
+	    }
+	    return _indexIds[towardIndex];
+	  },
+	  changeShownImage: function changeShownImage(shownId, towardId) {
+	    "use strict";
+
+	    var _shownId = shownId;
+	    var _towardId = towardId;
+	    var shownImage = document.getElementById(_shownId);
+	    var towardImage = document.getElementById(_towardId);
+	    shownImage.classList.remove('is-active');
+	    towardImage.classList.add('is-active');
+	  }
+	};
+
+	module.exports = Carousel;
 
 /***/ }
 /******/ ]);

@@ -1,0 +1,33 @@
+body
+  color: red
+  .l-carousel
+    margin-left: auto
+    margin-right: auto
+  .p-carousel
+    position: relative
+    width: 640px
+    height: 360px
+  ._p-Btn
+    width: 24px
+    height: 24px
+    color: white
+    position: absolute
+    top: 50%
+    text-align: center
+    margin-top: auto
+    margin-bottom: auto
+    cursor: pointer
+  .p-leftBtn
+    @extend ._p-Btn
+    left: 10px
+  .p-rightBtn
+    @extend ._p-Btn
+    right: 10px
+  .p-image
+    display: none
+    height: 100%
+    &.is-active
+      display: block
+    img
+      height: 100%
+      width: 100%

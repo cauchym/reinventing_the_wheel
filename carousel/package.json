@@ -8,16 +8,26 @@
     "style-loader": "^0.13.1"
   },
   "devDependencies": {
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.7",
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
     "css-loader": "^0.25.0",
     "eslint": "^3.9.1",
     "eslint-loader": "^1.6.1",
+    "file-loader": "^0.9.0",
+    "node-sass": "^3.13.1",
+    "nodemon": "^1.11.0",
+    "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "node-sass ./carousel/style.sass ./carousel/style.css",
+    "build:js": "browserify ./*.js > dest.js",
+    "build": "npm run build:css && npm run build:js",
+    "start": "webpack --watch"
   },
   "author": "",
   "license": "ISC"
