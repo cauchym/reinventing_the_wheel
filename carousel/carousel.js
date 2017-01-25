@@ -1,6 +1,5 @@
 const Carousel = {
   init() {
-    "use strict";
     Carousel.config = {
       indexIds: Carousel._getIndexIds(),
     }
@@ -10,29 +9,24 @@ const Carousel = {
     window.onload = this.setEventListener();
   },
   setEventListener() {
-    "use strict";
     const leftArrow = document.getElementById('p-leftBtn');
     leftArrow.addEventListener('click', this.clickLeftArrow, false);
     const rightArrow = document.getElementById('p-rightBtn');
     rightArrow.addEventListener('click', this.clickRightArrow, false);
   },
   clickLeftArrow() {
-    "use strict";
     if (!Carousel.state.isAlready) return;
     Carousel._rollCarousel(Carousel._getShownId(), 'former');
   },
   clickRightArrow() {
-    "use strict";
     if (!Carousel.state.isAlready) return;
     Carousel._rollCarousel(Carousel._getShownId(), 'latter');
   },
   _getShownId() {
-    "use strict";
     const activeImage = document.getElementsByClassName('is-active');
     return activeImage[0].id;
   },
   _rollCarousel(shownId, towardOpt) {
-    "use strict";
     const _shownId = shownId;
     const towardId = Carousel.getTowardId(_shownId, towardOpt);
     if(_shownId !== towardId) {
@@ -40,7 +34,6 @@ const Carousel = {
     }
   },
   _getIndexIds() {
-    "use strict";
     const ImagesArray = document.getElementsByClassName('p-image');
     const indexIds = [];
     Array.prototype.forEach.call(ImagesArray, (el) => {
@@ -49,7 +42,6 @@ const Carousel = {
     return indexIds
   },
   _refreshArrows(towardId) {
-    "use strict";
     const rightArrow = document.getElementById('p-rightBtn');
     const leftArrow = document.getElementById('p-leftBtn');
     const indexIds = Carousel.config.indexIds;
@@ -63,7 +55,6 @@ const Carousel = {
     }
   },
   getTowardId(shownId, towardOpt) {
-    "use strict";
     const _shownId = shownId;
     const _indexIds = Carousel.config.indexIds;
     const shownIndex = _indexIds.indexOf(_shownId);
@@ -78,7 +69,6 @@ const Carousel = {
     return _indexIds[towardIndex];
   },
   changeShownImage(shownId, towardId) {
-    "use strict";
     const _shownId = shownId;
     const _towardId = towardId;
     const shownImage = document.getElementById(_shownId);

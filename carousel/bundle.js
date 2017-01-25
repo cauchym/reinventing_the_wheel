@@ -458,12 +458,10 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	var Carousel = {
 	  init: function init() {
-	    "use strict";
-
 	    Carousel.config = {
 	      indexIds: Carousel._getIndexIds()
 	    };
@@ -473,34 +471,24 @@
 	    window.onload = this.setEventListener();
 	  },
 	  setEventListener: function setEventListener() {
-	    "use strict";
-
 	    var leftArrow = document.getElementById('p-leftBtn');
 	    leftArrow.addEventListener('click', this.clickLeftArrow, false);
 	    var rightArrow = document.getElementById('p-rightBtn');
 	    rightArrow.addEventListener('click', this.clickRightArrow, false);
 	  },
 	  clickLeftArrow: function clickLeftArrow() {
-	    "use strict";
-
 	    if (!Carousel.state.isAlready) return;
 	    Carousel._rollCarousel(Carousel._getShownId(), 'former');
 	  },
 	  clickRightArrow: function clickRightArrow() {
-	    "use strict";
-
 	    if (!Carousel.state.isAlready) return;
 	    Carousel._rollCarousel(Carousel._getShownId(), 'latter');
 	  },
 	  _getShownId: function _getShownId() {
-	    "use strict";
-
 	    var activeImage = document.getElementsByClassName('is-active');
 	    return activeImage[0].id;
 	  },
 	  _rollCarousel: function _rollCarousel(shownId, towardOpt) {
-	    "use strict";
-
 	    var _shownId = shownId;
 	    var towardId = Carousel.getTowardId(_shownId, towardOpt);
 	    if (_shownId !== towardId) {
@@ -508,8 +496,6 @@
 	    }
 	  },
 	  _getIndexIds: function _getIndexIds() {
-	    "use strict";
-
 	    var ImagesArray = document.getElementsByClassName('p-image');
 	    var indexIds = [];
 	    Array.prototype.forEach.call(ImagesArray, function (el) {
@@ -518,8 +504,6 @@
 	    return indexIds;
 	  },
 	  _refreshArrows: function _refreshArrows(towardId) {
-	    "use strict";
-
 	    var rightArrow = document.getElementById('p-rightBtn');
 	    var leftArrow = document.getElementById('p-leftBtn');
 	    var indexIds = Carousel.config.indexIds;
@@ -533,8 +517,6 @@
 	    }
 	  },
 	  getTowardId: function getTowardId(shownId, towardOpt) {
-	    "use strict";
-
 	    var _shownId = shownId;
 	    var _indexIds = Carousel.config.indexIds;
 	    var shownIndex = _indexIds.indexOf(_shownId);
@@ -549,8 +531,6 @@
 	    return _indexIds[towardIndex];
 	  },
 	  changeShownImage: function changeShownImage(shownId, towardId) {
-	    "use strict";
-
 	    var _shownId = shownId;
 	    var _towardId = towardId;
 	    var shownImage = document.getElementById(_shownId);
