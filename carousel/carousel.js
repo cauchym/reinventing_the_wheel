@@ -4,6 +4,9 @@ const Carousel = {
     Carousel.config = {
       indexIds: Carousel._getIndexIds(),
     }
+    Carousel.state = {
+      isAlready: true,
+    }
     window.onload = this.setEventListener();
   },
   setEventListener() {
@@ -15,10 +18,12 @@ const Carousel = {
   },
   clickLeftArrow() {
     "use strict";
+    if (!Carousel.state.isAlready) return;
     Carousel._rollCarousel(Carousel._getShownId(), 'former');
   },
   clickRightArrow() {
     "use strict";
+    if (!Carousel.state.isAlready) return;
     Carousel._rollCarousel(Carousel._getShownId(), 'latter');
   },
   _getShownId() {
@@ -66,6 +71,7 @@ const Carousel = {
     const towardImage = document.getElementById(_towardId);
     if (shownId < towardId) {
       // slide to left
+      Carousel.state.isAlready = false;
       towardImage.classList.add('is-right');
       setTimeout(()=>{
         shownImage.classList.remove('is-active');
@@ -76,10 +82,12 @@ const Carousel = {
           towardImage.classList.remove('is-right');
           shownImage.classList.remove('is-sliding-ctol');
           towardImage.classList.remove('is-sliding-rtoc');
+          Carousel.state.isAlready = true;
         }, 1000);
       }, 10);
-    } else {
+    } else if (shownId > towardId) {
       // slide to right
+      Carousel.state.isAlready = false;
       towardImage.classList.add('is-left');
       setTimeout(()=>{
         shownImage.classList.remove('is-active');
@@ -90,6 +98,7 @@ const Carousel = {
           shownImage.classList.remove('is-sliding-ctor');
           towardImage.classList.remove('is-sliding-ltoc');
           towardImage.classList.add('is-active');
+          Carousel.state.isAlready = true;
         }, 1000);
       }, 10);
     }
