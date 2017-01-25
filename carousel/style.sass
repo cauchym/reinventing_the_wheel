@@ -26,7 +26,7 @@ body
     @extend ._p-Btn
     right: 10px
   .p-images-wrapper
-    // overflow: hidden
+    overflow: hidden
   .p-images
     width: 1920px
     height: 100%
@@ -37,17 +37,24 @@ body
     display: none
     width: 640px
     height: 100%
-    transition: all 1s
     &.is-active
       display: block
       position: absolute
       left: 640px
+    &.is-left
+      display: block
+      position: absolute
+      left: 0
+    &.is-right
+      display: block
+      position: absolute
+      left: 1280px
     &._is-sliding
       display: block
+      transition: transform 1s
     &.is-sliding-rtoc
       @extend ._is-sliding
       position: absolute
-      left: 1280px
       z-index: 2
       transform: translateX(-100%)
     &.is-sliding-ctol
@@ -64,7 +71,6 @@ body
       transform: translateX(100%)
     &.is-sliding-ltoc
       @extend ._is-sliding
-      left: 0
       z-index: 2
       transform: translateX(100%)
     img

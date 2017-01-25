@@ -88,7 +88,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  color: red; }\n  body .l-carousel {\n    margin-left: auto;\n    margin-right: auto; }\n  body .p-carousel {\n    position: relative;\n    width: 640px;\n    height: 360px; }\n  body ._p-Btn, body .p-leftBtn, body .p-rightBtn {\n    width: 24px;\n    height: 24px;\n    color: white;\n    position: absolute;\n    top: 50%;\n    text-align: center;\n    margin-top: auto;\n    margin-bottom: auto;\n    cursor: pointer; }\n  body .p-leftBtn {\n    left: 10px; }\n  body .p-rightBtn {\n    right: 10px; }\n  body .p-image {\n    display: none;\n    height: 100%; }\n    body .p-image.is-active {\n      display: block; }\n    body .p-image img {\n      height: 100%;\n      width: 100%; }\n", ""]);
+	exports.push([module.id, "body {\n  color: red; }\n  body .l-carousel {\n    margin-left: auto;\n    margin-right: auto; }\n  body .p-carousel {\n    position: relative;\n    width: 640px;\n    height: 360px; }\n  body ._p-Btn, body .p-leftBtn, body .p-rightBtn {\n    width: 24px;\n    height: 24px;\n    color: white;\n    position: absolute;\n    top: 50%;\n    text-align: center;\n    margin-top: auto;\n    margin-bottom: auto;\n    cursor: pointer;\n    z-index: 3;\n    overflow: hidden; }\n  body .p-leftBtn {\n    left: 10px; }\n  body .p-rightBtn {\n    right: 10px; }\n  body .p-images-wrapper {\n    overflow: hidden; }\n  body .p-images {\n    width: 1920px;\n    height: 100%;\n    display: flex;\n    position: relative;\n    transform: translateX(-640px); }\n  body .p-image {\n    display: none;\n    width: 640px;\n    height: 100%; }\n    body .p-image.is-active {\n      display: block;\n      position: absolute;\n      left: 640px; }\n    body .p-image.is-left {\n      display: block;\n      position: absolute;\n      left: 0; }\n    body .p-image.is-right {\n      display: block;\n      position: absolute;\n      left: 1280px; }\n    body .p-image._is-sliding, body .p-image.is-sliding-rtoc, body .p-image.is-sliding-ctol, body .p-image.is-sliding-ctor, body .p-image.is-sliding-ltoc {\n      display: block;\n      transition: transform 1s; }\n    body .p-image.is-sliding-rtoc {\n      position: absolute;\n      z-index: 2;\n      transform: translateX(-100%); }\n    body .p-image.is-sliding-ctol {\n      position: absolute;\n      z-index: 1;\n      left: 640px;\n      transform: translateX(-100%); }\n    body .p-image.is-sliding-ctor {\n      position: absolute;\n      z-index: 1;\n      left: 640px;\n      transform: translateX(100%); }\n    body .p-image.is-sliding-ltoc {\n      z-index: 2;\n      transform: translateX(100%); }\n    body .p-image img {\n      height: 100%;\n      width: 100%; }\n", ""]);
 
 	// exports
 
@@ -498,7 +498,9 @@
 
 	    var _shownId = shownId;
 	    var towardId = Carousel.getTowardId(_shownId, towardOpt);
-	    Carousel.changeShownImage(_shownId, towardId);
+	    if (_shownId !== towardId) {
+	      Carousel.changeShownImage(_shownId, towardId);
+	    }
 	  },
 	  _getIndexIds: function _getIndexIds() {
 	    "use strict";
@@ -533,8 +535,35 @@
 	    var _towardId = towardId;
 	    var shownImage = document.getElementById(_shownId);
 	    var towardImage = document.getElementById(_towardId);
-	    shownImage.classList.remove('is-active');
-	    towardImage.classList.add('is-active');
+	    if (shownId < towardId) {
+	      // slide to left
+	      towardImage.classList.add('is-right');
+	      setTimeout(function () {
+	        shownImage.classList.remove('is-active');
+	        shownImage.classList.add('is-sliding-ctol');
+	        towardImage.classList.add('is-sliding-rtoc');
+	        setTimeout(function () {
+	          towardImage.classList.add('is-active');
+	          towardImage.classList.remove('is-right');
+	          shownImage.classList.remove('is-sliding-ctol');
+	          towardImage.classList.remove('is-sliding-rtoc');
+	        }, 1000);
+	      }, 10);
+	    } else {
+	      // slide to right
+	      towardImage.classList.add('is-left');
+	      setTimeout(function () {
+	        shownImage.classList.remove('is-active');
+	        shownImage.classList.add('is-sliding-ctor');
+	        towardImage.classList.add('is-sliding-ltoc');
+	        setTimeout(function () {
+	          towardImage.classList.remove('is-left');
+	          shownImage.classList.remove('is-sliding-ctor');
+	          towardImage.classList.remove('is-sliding-ltoc');
+	          towardImage.classList.add('is-active');
+	        }, 1000);
+	      }, 10);
+	    }
 	  }
 	};
 

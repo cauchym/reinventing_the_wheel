@@ -66,26 +66,32 @@ const Carousel = {
     const towardImage = document.getElementById(_towardId);
     if (shownId < towardId) {
       // slide to left
-      console.log('slide to left');
-      shownImage.classList.remove('is-active');
-      shownImage.classList.add('is-sliding-ctol');
-      towardImage.classList.add('is-sliding-rtoc');
+      towardImage.classList.add('is-right');
       setTimeout(()=>{
-        shownImage.classList.remove('is-sliding-ctol');
-        towardImage.classList.remove('is-sliding-rtoc');
-        towardImage.classList.add('is-active');
-      }, 1000);
+        shownImage.classList.remove('is-active');
+        shownImage.classList.add('is-sliding-ctol');
+        towardImage.classList.add('is-sliding-rtoc');
+        setTimeout(()=>{
+          towardImage.classList.add('is-active');
+          towardImage.classList.remove('is-right');
+          shownImage.classList.remove('is-sliding-ctol');
+          towardImage.classList.remove('is-sliding-rtoc');
+        }, 1000);
+      }, 10);
     } else {
       // slide to right
-      console.log('slide to right');
-      shownImage.classList.remove('is-active');
-      shownImage.classList.add('is-sliding-ctor');
-      towardImage.classList.add('is-sliding-ltoc');
+      towardImage.classList.add('is-left');
       setTimeout(()=>{
-        shownImage.classList.remove('is-sliding-ctor');
-        towardImage.classList.remove('is-sliding-ltoc');
-        towardImage.classList.add('is-active');
-      }, 1000);
+        shownImage.classList.remove('is-active');
+        shownImage.classList.add('is-sliding-ctor');
+        towardImage.classList.add('is-sliding-ltoc');
+        setTimeout(()=>{
+          towardImage.classList.remove('is-left');
+          shownImage.classList.remove('is-sliding-ctor');
+          towardImage.classList.remove('is-sliding-ltoc');
+          towardImage.classList.add('is-active');
+        }, 1000);
+      }, 10);
     }
   },
 }
