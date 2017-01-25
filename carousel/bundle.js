@@ -88,7 +88,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  color: red; }\n  body .l-carousel {\n    margin-left: auto;\n    margin-right: auto; }\n  body .p-carousel {\n    position: relative;\n    width: 640px;\n    height: 360px; }\n  body ._p-Btn, body .p-leftBtn, body .p-rightBtn {\n    width: 24px;\n    height: 24px;\n    color: white;\n    position: absolute;\n    top: 50%;\n    text-align: center;\n    margin-top: auto;\n    margin-bottom: auto;\n    cursor: pointer;\n    z-index: 3;\n    overflow: hidden; }\n  body .p-leftBtn {\n    left: 10px; }\n  body .p-rightBtn {\n    right: 10px; }\n  body .p-images-wrapper {\n    overflow: hidden; }\n  body .p-images {\n    width: 1920px;\n    height: 100%;\n    display: flex;\n    position: relative;\n    transform: translateX(-640px); }\n  body .p-image {\n    display: none;\n    width: 640px;\n    height: 100%; }\n    body .p-image.is-active {\n      display: block;\n      position: absolute;\n      left: 640px; }\n    body .p-image.is-left {\n      display: block;\n      position: absolute;\n      left: 0; }\n    body .p-image.is-right {\n      display: block;\n      position: absolute;\n      left: 1280px; }\n    body .p-image._is-sliding, body .p-image.is-sliding-rtoc, body .p-image.is-sliding-ctol, body .p-image.is-sliding-ctor, body .p-image.is-sliding-ltoc {\n      display: block;\n      transition: transform 1s; }\n    body .p-image.is-sliding-rtoc {\n      position: absolute;\n      z-index: 2;\n      transform: translateX(-100%); }\n    body .p-image.is-sliding-ctol {\n      position: absolute;\n      z-index: 1;\n      left: 640px;\n      transform: translateX(-100%); }\n    body .p-image.is-sliding-ctor {\n      position: absolute;\n      z-index: 1;\n      left: 640px;\n      transform: translateX(100%); }\n    body .p-image.is-sliding-ltoc {\n      z-index: 2;\n      transform: translateX(100%); }\n    body .p-image img {\n      height: 100%;\n      width: 100%; }\n", ""]);
+	exports.push([module.id, "body {\n  color: red; }\n  body .l-carousel {\n    margin-left: auto;\n    margin-right: auto; }\n  body .p-carousel {\n    position: relative;\n    width: 640px;\n    height: 360px; }\n  body ._p-Btn, body .p-leftBtn, body .p-rightBtn {\n    width: 24px;\n    height: 24px;\n    color: white;\n    position: absolute;\n    top: 50%;\n    text-align: center;\n    margin-top: auto;\n    margin-bottom: auto;\n    cursor: pointer;\n    z-index: 3;\n    overflow: hidden; }\n    body ._p-Btn.is-hidden, body .is-hidden.p-leftBtn, body .is-hidden.p-rightBtn {\n      display: none; }\n  body .p-leftBtn {\n    left: 10px; }\n  body .p-rightBtn {\n    right: 10px; }\n  body .p-images-wrapper {\n    overflow: hidden; }\n  body .p-images {\n    width: 1920px;\n    height: 100%;\n    display: flex;\n    position: relative;\n    transform: translateX(-640px); }\n  body .p-image {\n    display: none;\n    width: 640px;\n    height: 100%; }\n    body .p-image.is-active {\n      display: block;\n      position: absolute;\n      left: 640px; }\n    body .p-image.is-left {\n      display: block;\n      position: absolute;\n      left: 0; }\n    body .p-image.is-right {\n      display: block;\n      position: absolute;\n      left: 1280px; }\n    body .p-image._is-sliding, body .p-image.is-sliding-rtoc, body .p-image.is-sliding-ctol, body .p-image.is-sliding-ctor, body .p-image.is-sliding-ltoc {\n      display: block;\n      transition: transform 1s; }\n    body .p-image.is-sliding-rtoc {\n      position: absolute;\n      z-index: 2;\n      transform: translateX(-100%); }\n    body .p-image.is-sliding-ctol {\n      position: absolute;\n      z-index: 1;\n      left: 640px;\n      transform: translateX(-100%); }\n    body .p-image.is-sliding-ctor {\n      position: absolute;\n      z-index: 1;\n      left: 640px;\n      transform: translateX(100%); }\n    body .p-image.is-sliding-ltoc {\n      z-index: 2;\n      transform: translateX(100%); }\n    body .p-image img {\n      height: 100%;\n      width: 100%; }\n", ""]);
 
 	// exports
 
@@ -517,6 +517,21 @@
 	    });
 	    return indexIds;
 	  },
+	  _refreshArrows: function _refreshArrows(towardId) {
+	    "use strict";
+
+	    var rightArrow = document.getElementById('p-rightBtn');
+	    var leftArrow = document.getElementById('p-leftBtn');
+	    var indexIds = Carousel.config.indexIds;
+	    if (towardId === indexIds[indexIds.length - 1]) {
+	      rightArrow.classList.add('is-hidden');
+	    } else if (towardId === indexIds[0]) {
+	      leftArrow.classList.add('is-hidden');
+	    } else {
+	      rightArrow.classList.remove('is-hidden');
+	      leftArrow.classList.remove('is-hidden');
+	    }
+	  },
 	  getTowardId: function getTowardId(shownId, towardOpt) {
 	    "use strict";
 
@@ -553,6 +568,7 @@
 	          towardImage.classList.remove('is-right');
 	          shownImage.classList.remove('is-sliding-ctol');
 	          towardImage.classList.remove('is-sliding-rtoc');
+	          Carousel._refreshArrows(towardId);
 	          Carousel.state.isAlready = true;
 	        }, 1000);
 	      }, 10);
@@ -569,6 +585,7 @@
 	          shownImage.classList.remove('is-sliding-ctor');
 	          towardImage.classList.remove('is-sliding-ltoc');
 	          towardImage.classList.add('is-active');
+	          Carousel._refreshArrows(towardId);
 	          Carousel.state.isAlready = true;
 	        }, 1000);
 	      }, 10);

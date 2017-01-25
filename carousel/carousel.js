@@ -48,6 +48,20 @@ const Carousel = {
     });
     return indexIds
   },
+  _refreshArrows(towardId) {
+    "use strict";
+    const rightArrow = document.getElementById('p-rightBtn');
+    const leftArrow = document.getElementById('p-leftBtn');
+    const indexIds = Carousel.config.indexIds;
+    if(towardId === indexIds[indexIds.length-1]){
+      rightArrow.classList.add('is-hidden');
+    }else if(towardId === indexIds[0]){
+      leftArrow.classList.add('is-hidden');
+    }else{
+      rightArrow.classList.remove('is-hidden');
+      leftArrow.classList.remove('is-hidden');
+    }
+  },
   getTowardId(shownId, towardOpt) {
     "use strict";
     const _shownId = shownId;
@@ -82,6 +96,7 @@ const Carousel = {
           towardImage.classList.remove('is-right');
           shownImage.classList.remove('is-sliding-ctol');
           towardImage.classList.remove('is-sliding-rtoc');
+          Carousel._refreshArrows(towardId);
           Carousel.state.isAlready = true;
         }, 1000);
       }, 10);
@@ -98,6 +113,7 @@ const Carousel = {
           shownImage.classList.remove('is-sliding-ctor');
           towardImage.classList.remove('is-sliding-ltoc');
           towardImage.classList.add('is-active');
+          Carousel._refreshArrows(towardId);
           Carousel.state.isAlready = true;
         }, 1000);
       }, 10);
