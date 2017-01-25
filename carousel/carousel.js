@@ -30,7 +30,9 @@ const Carousel = {
     "use strict";
     const _shownId = shownId;
     const towardId = Carousel.getTowardId(_shownId, towardOpt);
-    Carousel.changeShownImage(_shownId, towardId);
+    if(_shownId !== towardId) {
+      Carousel.changeShownImage(_shownId, towardId);
+    }
   },
   _getIndexIds() {
     "use strict";
@@ -62,8 +64,29 @@ const Carousel = {
     const _towardId = towardId;
     const shownImage = document.getElementById(_shownId);
     const towardImage = document.getElementById(_towardId);
-    shownImage.classList.remove('is-active');
-    towardImage.classList.add('is-active');
+    if (shownId < towardId) {
+      // slide to left
+      console.log('slide to left');
+      shownImage.classList.remove('is-active');
+      shownImage.classList.add('is-sliding-ctol');
+      towardImage.classList.add('is-sliding-rtoc');
+      setTimeout(()=>{
+        shownImage.classList.remove('is-sliding-ctol');
+        towardImage.classList.remove('is-sliding-rtoc');
+        towardImage.classList.add('is-active');
+      }, 1000);
+    } else {
+      // slide to right
+      console.log('slide to right');
+      shownImage.classList.remove('is-active');
+      shownImage.classList.add('is-sliding-ctor');
+      towardImage.classList.add('is-sliding-ltoc');
+      setTimeout(()=>{
+        shownImage.classList.remove('is-sliding-ctor');
+        towardImage.classList.remove('is-sliding-ltoc');
+        towardImage.classList.add('is-active');
+      }, 1000);
+    }
   },
 }
 
