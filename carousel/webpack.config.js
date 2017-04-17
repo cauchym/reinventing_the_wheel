@@ -1,44 +1,42 @@
 module.exports = {
   entry: {
-    javascript: './entry.js'
+    javascript: './src/entry.js'
   },
   output: {
     path: __dirname,
     filename: "bundle.js"
   },
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "eslint-loader"
-      }
-    ],
-    loaders: [
+        loader: "eslint-loader",
+        enforce: "pre"
+      },
       {
         test: /\.sass$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.css$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.png$/,
-        loaders: ['style', 'css', 'sass']
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.js?$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
-        query: {
+        options: {
           cacheDirectory: true,
-          presets: ['es2015']
+          presets: [
+            ['es2015', { modules: false}]
+          ]
         }
       }
-    ]
-  },
-  eslint: {
-    configFile: './.eslintrc'
+    ],
   }
 };

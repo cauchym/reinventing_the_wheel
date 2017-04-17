@@ -5,7 +5,8 @@
   "main": "bundle.js",
   "dependencies": {
     "css-loader": "^0.25.0",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -20,14 +21,16 @@
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.3"
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "node-sass ./carousel/style.sass ./carousel/style.css",
+    "build:css": "node-sass ./style.sass ./style.css",
     "build:js": "browserify ./*.js > dest.js",
     "build": "npm run build:css && npm run build:js",
-    "start": "webpack --watch"
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server"
   },
   "author": "",
   "license": "ISC"
