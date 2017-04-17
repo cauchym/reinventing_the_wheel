@@ -4,16 +4,10 @@ module.exports = {
   },
   output: {
     path: __dirname,
-    filename: "bundle.js"
+    filename: "index.js"
   },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader",
-        enforce: "pre"
-      },
       {
         test: /\.sass$/,
         loaders: ['style-loader', 'css-loader', 'sass-loader']
@@ -37,6 +31,6 @@ module.exports = {
           ]
         }
       }
-    ],
+    ]
   }
 };

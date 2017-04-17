@@ -1,5 +1,5 @@
-require("./style.sass");
-const Content = require("./content.js");
-document.write(Content);
+require("./style.css");
 const Carousel = require("./carousel.js");
-Carousel.init();
+window.onload = function() {
+  Carousel.init();
+}

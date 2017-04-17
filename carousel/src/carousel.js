@@ -1,15 +1,17 @@
 const Carousel = {
   init() {
+    console.log('okとしか言いようがない');
     Carousel.config = {
       indexIds: Carousel._getIndexIds(),
     }
     Carousel.state = {
       isAlready: true,
     }
-    window.onload = this.setEventListener();
+    this.setEventListener();
   },
   setEventListener() {
     const leftArrow = document.getElementById('p-leftBtn');
+    console.log(leftArrow);
     leftArrow.addEventListener('click', this.clickLeftArrow, false);
     const rightArrow = document.getElementById('p-rightBtn');
     rightArrow.addEventListener('click', this.clickRightArrow, false);
